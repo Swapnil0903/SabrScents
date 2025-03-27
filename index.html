@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABRSCENTS - Organic Solid Perfumes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🔹 Navigation Bar -->
+    <div class="navbar">
+        <h1>SABRSCENTS - Organic Solid Perfumes</h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#brand-story">About Us</a></li> <!-- Fixed Link -->
+            <li><a href="#">Contact</a></li>
+            <li><button class="cart-button" onclick="openCart()">🛒 Cart</button></li>
+        </ul>
+    </div>
+
+    <!-- 🔹 Hero Section -->
+    <div class="hero-section">
+        <div class="hero-text">
+            <h2>Experience Long-Lasting, Eco-Friendly Fragrances</h2>
+            <p>Natural, Chemical-Free, and Portable Scents</p>
+            <div class="hero-buttons">
+                <button onclick="scrollToSection('products')">Shop Now</button>
+                <button onclick="alert('Explore our exclusive collections!')">Explore Collections</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Product Cards Section -->
+    <div class="product-cards" id="products">
+        <h2>Our Exclusive Collection</h2>
+        <div class="card">
+            <img src="images/perfume1.jpg" alt="Tin Package">
+            <h3>Tin Package</h3>
+            <p>Price: ₹299</p>
+            <button class="add-to-cart" data-index="0">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="images/perfume2.jpg" alt="Bamboo Sticks">
+            <h3>Bamboo Sticks</h3>
+            <p>Price: ₹499</p>
+            <button class="add-to-cart" data-index="1">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="images/perfume3.jpg" alt="Antique Package">
+            <h3>Antique Package</h3>
+            <p>Price: ₹749</p>
+            <button class="add-to-cart" data-index="2">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- 🔹 Cart Popup -->
+    <div class="cart-popup" id="cart-popup">
+        <span class="close-btn" onclick="closeCart()">&times;</span>
+        <h3>Your Cart</h3>
+        <ul id="cart-items"></ul>
+        <button>Checkout</button>
+        <button onclick="closeCart()">Continue Shopping</button>
+    </div>
+
+    <!-- 🔹 Brand Story Section -->
+    <section id="brand-story" class="brand-story">
+        <h2 class="fade-in">Brand Story</h2>
+        <p class="fade-in">
+            At SABRSCENTS, we believe that fragrances should be pure, natural, and sustainable. 
+            Born from the idea of creating eco-friendly, chemical-free scents, our solid perfumes 
+            are crafted to complement your lifestyle while preserving nature.
+        </p>
+        <p class="fade-in">
+            Our journey began with a passion for organic ingredients and a love for timeless, 
+            sophisticated scents. Each fragrance tells a story — a story of dedication, purity, 
+            and elegance. We invite you to be a part of this journey.
+        </p>
+    </section>
+
+    <!-- 🔹 Footer -->
+    <footer>
+        <p>© 2025 SABRSCENTS. All Rights Reserved. Follow us:</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </footer>
+
+    <!-- 🔹 JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
