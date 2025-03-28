@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - SABRSCENTS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="checkout-container">
+        <h2>Secure Checkout</h2>
+        
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h3>Your Cart</h3>
+            <ul id="cart-items">
+                <!-- Items will be dynamically added here -->
+            </ul>
+            <p><strong>Total:</strong> ₹<span id="total-price">0.00</span></p>
+        </div>
+
+        <!-- Payment & Shipping Form -->
+        <form id="checkout-form">
+            <h3>Billing Details</h3>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="text" placeholder="Shipping Address" required>
+
+            <h3>Payment Method</h3>
+            <select required>
+                <option value="credit-card">Credit/Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="cod">Cash on Delivery</option>
+            </select>
+
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

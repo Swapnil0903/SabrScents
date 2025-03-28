@@ -9,12 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
-                observer.unobserve(entry.target); // Stop observing once visible
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.2 }); // Trigger when 20% of the element is visible
+    }, { threshold: 0.2 });
 
     fadeElements.forEach(el => observer.observe(el));
+
+    updateCartSummary(); // Update cart on page load
+    loadCheckoutPage();  // Load checkout page if applicable
 });
 
 // Get required DOM elements
@@ -22,7 +25,8 @@ const addToCartButtons = document.querySelectorAll('.add-to-cart');
 const cartPopup = document.querySelector('.cart-popup');
 const cartButton = document.querySelector('.cart-button');
 const closeBtn = document.querySelector('.close-btn');
-const cartSummaryContainer = cartPopup.querySelector('ul');
+const cartSummaryContainer = document.querySelector('.cart-popup ul');
+const checkoutBtn = document.getElementById('checkout-btn');
 
 // Product list for reference
 const products = [
@@ -33,8 +37,11 @@ const products = [
 
 // Ensure cart popup is hidden on page load
 window.addEventListener('load', () => {
-    cartPopup.classList.remove('active'); // Hide popup initially
+    if (cartPopup) {
+        cartPopup.classList.remove('active'); // Hide popup initially
+    }
     updateCartSummary();
+    loadCheckoutPage();
 });
 
 // Add to Cart button click listeners
@@ -46,19 +53,19 @@ addToCartButtons.forEach((button) => {
 });
 
 // Toggle cart popup visibility on Cart button click
-cartButton.addEventListener('click', () => {
-    if (cartPopup.classList.contains('active')) {
-        cartPopup.classList.remove('active');  // Hide popup
-    } else {
-        cartPopup.classList.add('active');  // Show popup
+if (cartButton) {
+    cartButton.addEventListener('click', () => {
+        cartPopup.classList.toggle('active');
         updateCartSummary();
-    }
-});
+    });
+}
 
 // Close cart popup on close button click
-closeBtn.addEventListener('click', () => {
-    cartPopup.classList.remove('active');
-});
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        cartPopup.classList.remove('active');
+    });
+}
 
 // Show toast notification for added items
 function showToast(message) {
@@ -113,6 +120,8 @@ function addToCart(index) {
 
 // Update Cart Summary
 function updateCartSummary() {
+    if (!cartSummaryContainer) return;
+
     cartSummaryContainer.innerHTML = '';
 
     if (cart.length === 0) {
@@ -137,6 +146,12 @@ function updateCartSummary() {
     totalItem.className = 'cart-total';
     totalItem.innerHTML = `<strong>Total: ₹${total.toFixed(2)}</strong>`;
     cartSummaryContainer.appendChild(totalItem);
+
+    const checkoutButton = document.createElement('button');
+    checkoutButton.innerText = "Proceed to Checkout";
+    checkoutButton.className = "checkout-btn";
+    checkoutButton.onclick = () => confirmCheckout();
+    cartSummaryContainer.appendChild(checkoutButton);
 }
 
 // Remove item from cart
@@ -156,36 +171,99 @@ function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+// Ensure the total amount updates correctly on checkout page
+function loadCheckoutPage() {
+    const checkoutSummary = document.getElementById('cart-items');
+    const checkoutTotal = document.getElementById('total-price');
+
+    if (!checkoutSummary || !checkoutTotal) return;
+
+    let storedCart = localStorage.getItem('cart');
+    cart = storedCart ? JSON.parse(storedCart) : [];
+
+    checkoutSummary.innerHTML = '';
+
+    if (cart.length === 0) {
+        checkoutSummary.innerHTML = '<li>Your cart is empty.</li>';
+        checkoutTotal.innerText = '₹0.00';
+        return;
+    }
+
+    let total = 0;
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+
+        const listItem = document.createElement('li');
+        listItem.innerText = `${item.name} - ₹${item.price} x ${item.quantity}`;
+        checkoutSummary.appendChild(listItem);
+    });
+
+    checkoutTotal.innerText = `₹${total.toFixed(2)}`;
+}
+
+// Confirm Checkout
+function confirmCheckout() {
+    if (cart.length === 0) {
+        alert("⚠️ Your cart is empty. Add items before checking out.");
+        return;
+    }
+    if (confirm("Proceed to checkout?")) {
+        saveCart();
+        window.location.href = "checkout.html";
+    }
+}
+
+// Place Order Function
+function placeOrder() {
+    if (cart.length === 0) {
+        alert("⚠️ Your cart is empty! Please add items before placing an order.");
+        return;
+    }
+
+    alert("🎉 Thank you! Your order has been placed successfully.");
+    localStorage.removeItem('cart'); // Clear cart
+    cart = [];
+
+    setTimeout(() => {
+        window.location.href = "order-confirmation.html";
+    }, 2000);
+}
+
+// Ensure "Place Order" works in checkout page
+document.addEventListener('DOMContentLoaded', () => {
+    const orderBtn = document.getElementById('checkout-form');
+    if (orderBtn) {
+        orderBtn.addEventListener('submit', function(event) {
+            event.preventDefault();
+            placeOrder();
+        });
+    }
+});
+
 // Scroll to Products Section
 function scrollToProducts() {
     document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ✅ Shop Now Button - Scroll to Products Section
-document.querySelector(".hero-buttons button:nth-child(1)").addEventListener("click", function() {
-    document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+// Display User Initials in Avatar
+document.querySelectorAll(".user-avatar").forEach((avatar) => {
+    let name = avatar.getAttribute("data-name").trim();
+    let initials = name.split(" ").map(word => word[0]).join("").toUpperCase();
+    avatar.innerText = initials;
 });
+fetch('https://api64.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+        let ip = data.ip;
 
-
-// ✅ Explore Collections Button - Display Message
-document.querySelector(".hero-buttons button:nth-child(2)").addEventListener("click", function() {
-    alert("Explore our exclusive collections!");
-});
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    });
-});
-window.addEventListener("scroll", function () {
-    const navbar = document.querySelector(".navbar");
-    if (window.scrollY > 50) {
-        navbar.classList.add("scrolled");
-    } else {
-        navbar.classList.remove("scrolled");
-    }
-});
-
+        // Fetch location details
+        fetch(`https://ipapi.co/${ip}/json/`)
+            .then(response => response.json())
+            .then(locationData => {
+                console.log(`Visitor IP: ${ip}`);
+                console.log(`Location: ${locationData.city}, ${locationData.region}, ${locationData.country_name}`);
+                console.log(`Time: ${new Date().toLocaleString()}`);
+            })
+            .catch(error => console.error("Error fetching location:", error));
+    })
+    .catch(error => console.error("Error fetching IP:", error));
