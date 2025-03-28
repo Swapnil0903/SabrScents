@@ -260,9 +260,22 @@ fetch('https://api64.ipify.org?format=json')
         fetch(`https://ipapi.co/${ip}/json/`)
             .then(response => response.json())
             .then(locationData => {
-                console.log(`Visitor IP: ${ip}`);
-                console.log(`Location: ${locationData.city}, ${locationData.region}, ${locationData.country_name}`);
-                console.log(`Time: ${new Date().toLocaleString()}`);
+                let logData = {
+                    ip: ip,
+                    location: `${locationData.city}, ${locationData.region}, ${locationData.country_name}`,
+                    time: new Date().toLocaleString()
+                };
+
+                // Retrieve existing logs from Local Storage
+                let logs = JSON.parse(localStorage.getItem("visitorLogs")) || [];
+
+                // Add new log entry
+                logs.push(logData);
+
+                // Store updated logs back in Local Storage
+                localStorage.setItem("visitorLogs", JSON.stringify(logs));
+
+                console.log("Visitor logged:", logData);
             })
             .catch(error => console.error("Error fetching location:", error));
     })
