@@ -30,9 +30,9 @@ const checkoutBtn = document.getElementById('checkout-btn');
 
 // Product list for reference
 const products = [
-    { name: 'Tin Package', price: 299 },
+    { name: 'Solid Perfume Stick', price: 149 },
     { name: 'Bamboo Sticks', price: 499 },
-    { name: 'Antique Package', price: 749 }
+    { name: 'Antique Package', price: 749 }, // Added this missing product
 ];
 
 // Ensure cart popup is hidden on page load
@@ -75,32 +75,31 @@ function showToast(message) {
 
     Object.assign(toast.style, {
         position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        backgroundColor: '#f4b400',
-        color: '#333',
-        padding: '10px 20px',
-        borderRadius: '5px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-        zIndex: '1000',
+        bottom: '50px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        backgroundColor: '#333',
+        color: '#fff',
+        padding: '12px 18px',
+        borderRadius: '8px',
+        fontSize: '16px',
         opacity: '0',
-        transform: 'translateY(20px)',
-        transition: 'opacity 0.5s, transform 0.5s'
+        transition: 'opacity 0.5s, transform 0.5s',
+        zIndex: '1000'
     });
 
     document.body.appendChild(toast);
 
     setTimeout(() => {
         toast.style.opacity = '1';
-        toast.style.transform = 'translateY(0)';
     }, 100);
 
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateY(20px)';
         setTimeout(() => toast.remove(), 500);
-    }, 2000);
+    }, 3000);
 }
+
 
 // Add to Cart function
 function addToCart(index) {
@@ -207,11 +206,41 @@ function confirmCheckout() {
         alert("⚠️ Your cart is empty. Add items before checking out.");
         return;
     }
-    if (confirm("Proceed to checkout?")) {
-        saveCart();
+
+    const checkoutMsg = document.createElement('div');
+    checkoutMsg.className = 'checkout-popup';
+    checkoutMsg.innerHTML = `
+        <p>✅ Proceeding to checkout...</p>
+    `;
+
+    Object.assign(checkoutMsg.style, {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#4CAF50',
+        color: '#fff',
+        padding: '15px 20px',
+        borderRadius: '10px',
+        fontSize: '18px',
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+        opacity: '0',
+        transition: 'opacity 0.5s ease-in-out'
+    });
+
+    document.body.appendChild(checkoutMsg);
+
+    setTimeout(() => {
+        checkoutMsg.style.opacity = '1';
+    }, 100);
+
+    setTimeout(() => {
+        checkoutMsg.style.opacity = '0';
+        setTimeout(() => checkoutMsg.remove(), 500);
         window.location.href = "checkout.html";
-    }
+    }, 2000);
 }
+
 
 // Place Order Function
 function placeOrder() {
@@ -220,13 +249,41 @@ function placeOrder() {
         return;
     }
 
-    alert("🎉 Thank you! Your order has been placed successfully.");
-    localStorage.removeItem('cart'); // Clear cart
-    cart = [];
+    const orderMsg = document.createElement('div');
+    orderMsg.className = 'order-popup';
+    orderMsg.innerHTML = `
+        <p>🎉 Placing your order...</p>
+    `;
+
+    Object.assign(orderMsg.style, {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#3498db',
+        color: '#fff',
+        padding: '15px 20px',
+        borderRadius: '10px',
+        fontSize: '18px',
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+        opacity: '0',
+        transition: 'opacity 0.5s ease-in-out'
+    });
+
+    document.body.appendChild(orderMsg);
 
     setTimeout(() => {
+        orderMsg.style.opacity = '1';
+    }, 100);
+
+    // Reduce delay if needed (Currently 2s)
+    setTimeout(() => {
+        orderMsg.style.opacity = '0';
+        setTimeout(() => orderMsg.remove(), 500);
+        localStorage.removeItem('cart'); // Clear cart
+        cart = [];
         window.location.href = "order-confirmation.html";
-    }, 2000);
+    }, 1500);  // Reduced delay
 }
 
 // Ensure "Place Order" works in checkout page
