@@ -1,5 +1,7 @@
 ¸
-
+html, body {
+    overflow-x: hidden;
+}
 /* 📌 Adjust Product Cards Section */
 .product-cards {
     display: flex;
