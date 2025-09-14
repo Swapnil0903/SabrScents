@@ -15,17 +15,22 @@
 <body>
 
     <!-- 🔹 Navigation Bar -->
-    <div class="navbar">
-        <h1 class="brand-title">SABRSCENTS - Organic Solid Perfumes</h1>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#brand-story">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><button class="cart-button" onclick="openCart()">🛒 Cart</button></li>
-        </ul>
-    </div>
-
+    <!-- 🔹 Navigation Bar -->
+<div class="navbar">
+    <h1 class="brand-title">SABRSCENTS - Organic Solid Perfumes</h1>
+    
+    <!-- Hamburger Menu Button (only for mobile) -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  
+    <ul id="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#brand-story">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><button class="cart-button" onclick="openCart()">🛒 Cart</button></li>
+    </ul>
+  </div>
+  
     <!-- 🔹 Hero Section -->
     <div class="hero-section">
         <div class="hero-text">

@@ -116,7 +116,9 @@ function addToCart(index) {
     updateCartSummary();
     showToast(`${selectedProduct.name} added to cart!`);
 }
-
+function toggleMenu() {
+    document.getElementById("nav-links").classList.toggle("active");
+  }
 // Update Cart Summary
 function updateCartSummary() {
     if (!cartSummaryContainer) return;
