@@ -1123,6 +1123,9 @@ footer a:hover {
 .btn:hover {
     background: #0056b3;
 }
+.hamburger {
+    display: none;
+  }
 /* 🔹 Tablet & Medium Screens (≤ 768px) */
 @media (max-width: 768px) {
     .navbar {
@@ -1142,10 +1145,8 @@ footer a:hover {
     .navbar h1 {
         font-size: 22px;
     }
-/* Default (Desktop) - hide hamburger */
-.hamburger {
-    display: none;
-  }
+
+
     /* ✅ Hamburger visible on tablet & mobile */
     .hamburger {
         display: block;
