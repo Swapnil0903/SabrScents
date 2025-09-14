@@ -1142,7 +1142,10 @@ footer a:hover {
     .navbar h1 {
         font-size: 22px;
     }
-
+/* Default (Desktop) - hide hamburger */
+.hamburger {
+    display: none;
+  }
     /* ✅ Hamburger visible on tablet & mobile */
     .hamburger {
         display: block;
