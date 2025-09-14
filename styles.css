@@ -1123,9 +1123,12 @@ footer a:hover {
 }
 /* 🔹 Mobile Optimization */
 @media (max-width: 480px) {
-    body {
-        font-size: 16px; /* Ensure readability */
+    .brand-title {
+        font-size: 16px;
+        white-space: normal; /* ✅ allows wrapping instead of overflowing */
+        text-align: center;
     }
+
 
     .navbar ul {
         flex-direction: column;
@@ -1143,6 +1146,11 @@ footer a:hover {
     .cart-button {
         padding: 10px 12px;
         font-size: 14px;
+    }
+    .hero-section {
+        background-image: url('/images/hero-bg-small.webp'); 
+        background-size: cover;
+        background-position: center;
     }
 
     .product-cards {
@@ -1193,9 +1201,12 @@ footer a:hover {
 
 /* 🔹 Small Screens (Phones) */
 @media (max-width: 480px) {
-    body {
-        font-size: 16px; /* Ensure readability */
+    .brand-title {
+        font-size: 16px;
+        white-space: normal; /* ✅ allows wrapping instead of overflowing */
+        text-align: center;
     }
+
 
     .navbar h1 {
         font-size: 20px; /* ✅ prevent title overflow */
@@ -1212,6 +1223,11 @@ footer a:hover {
     .cart-button {
         padding: 10px 12px;
         font-size: 14px;
+    }
+    .hero-section {
+        background-image: url('/images/hero-bg-small.webp'); 
+        background-size: cover;
+        background-position: center;
     }
 
     .product-cards {
